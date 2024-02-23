@@ -1,0 +1,146 @@
+<style>
+    main{
+        height: 100vh;
+        width: 100vw;
+        background-color: thistle;
+        padding: 5%;
+    }
+    .cigarroCompleto {
+        display: flex;
+        flex-wrap: nowrap;
+        height: 25px;
+    }
+
+    .bituca {
+        background-color: orangered;
+        width: 55px;
+        height: 100%;
+    }
+    .corpo {
+        background-color: antiquewhite;
+        width: 185px;
+        height: 100%;
+    }
+    .brasa {
+        background-color: red;
+        width: 5px;
+        height: 100%;
+    }
+
+    .cinzeiro {
+        margin-top: 200px;
+
+        background-color: lightslategrey;
+        width: 250px;
+        height: 75px;
+    }
+</style>
+
+<main>
+    <button onclick="acenderCigarro()">novo cigarro</button>
+    <br>
+    <div class="fumandoCigarro">
+        <!-- <div class="cigarroCompleto">
+            <div class="bituca"></div>
+            <div class="corpo"></div>
+            <div class="brasa"></div>
+        </div> -->
+
+    </div>
+
+
+    <div class="cinzeiro"></div>
+</main>
+
+<script>
+    tamanhoDefault = 185
+    fumandoCigarro = document.querySelector('.fumandoCigarro')
+    // todoCigarroTag = document.querySelector('.cigarroCompleto')
+    // corpoCigarroTag = document.querySelector('.corpo')
+    // brasaCigarroTag = document.querySelector('.brasa')
+    // cinzeiroTag = document.querySelector('.cinzeiro')
+    // tamanho = 185
+    // tamanhoAtual = corpoCigarroTag.style.width = tamanho + 'px'
+
+    
+
+
+    function createCigarro (){
+        todoCigarro = document.createElement('div')
+        bituca = document.createElement('div')
+        corpo = document.createElement('div')
+        brasa = document.createElement('div')
+    
+        todoCigarro.classList.add('cigarroCompleto')
+        bituca.classList.add('bituca')
+        corpo.classList.add('corpo')
+        brasa.classList.add('brasa')
+
+        corpo.style.width = 185
+        brasa.style.display = 'none'
+
+        todoCigarro.appendChild(bituca)
+        todoCigarro.appendChild(corpo)
+        todoCigarro.appendChild(brasa)
+
+        return todoCigarro
+    }
+
+    function desmembrarCigarro(cigarro){
+        bituca = cigarro.querySelector('.bituca')
+        corpo = cigarro.querySelector('.corpo')
+        brasa = cigarro.querySelector('.brasa')
+
+        return bituca, corpo, brasa
+    }
+
+    function acenderCigarro(cigarro){
+        bituca, corpo, brasa = desmembrarCigarro(cigarro)
+        brasa.style.display = 'block'
+
+        setInterval((corpo)=>{
+            let larguraAtual = corpo.offsetWidth
+            corpo.style.width = larguraAtual - 1 + 'px'
+        }, 500)
+
+
+    }
+
+    cigarro = createCigarro()
+    fumandoCigarro.appendChild(cigarro)
+    acenderCigarro(cigarro)
+    // setInterval(()=>{
+    //     tamanho -= 1
+    //     corpoCigarroTag.style.width = tamanho + 'px'
+    //     if (tamanho < 5){
+    //         brasaCigarroTag.style.backgroundColor = 'black'
+    //     }else{
+    //         brasaCigarroTag.style.backgroundColor = 'red'
+    //     }
+    // },400)
+    var cores = ["red", "orange", "yellow", "white"]; // um array com as cores da brasa
+var indice = 0; // um índice para acessar o array
+var fumaca = document.createElement("div"); // um elemento div para a fumaça
+fumaca.classList.add("fumaca"); // adiciona uma classe para a fumaça
+fumaca.style.opacity = 0.5; // define a opacidade da fumaça
+fumaca.style.backgroundColor = "gray"; // define a cor da fumaça
+fumaca.style.width = "10px"; // define a largura da fumaça
+fumaca.style.height = "10px"; // define a altura da fumaça
+fumaca.style.borderRadius = "50%"; // faz a fumaça ficar redonda
+fumaca.style.position = "absolute"; // define a posição da fumaça
+fumaca.style.top = "0px"; // define a posição inicial da fumaça
+fumaca.style.left = "0px"; // define a posição inicial da fumaça
+todoCigarro.appendChild(fumaca); // adiciona a fumaça ao cigarro
+
+var intervalo = setInterval(() => {
+  let larguraAtual = corpo.offsetWidth;
+  corpo.style.width = larguraAtual - 1 + "px";
+  if (larguraAtual <= 0) {
+    clearInterval(intervalo);
+  }
+  brasa.style.backgroundColor = cores[indice]; // muda a cor da brasa
+  indice = (indice + 1) % cores.length; // atualiza o índice
+  fumaca.style.transform = `translate(${Math.random() * 10}px, ${-Math.random() * 10}px)`; // move a fumaça aleatoriamente
+}, 500);
+
+</script>
