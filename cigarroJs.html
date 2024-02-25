@@ -53,6 +53,12 @@
 </main>
 
 <script>
+    function renderizaCigarro(target, cigarro){
+        bituca, corpo, brasa = desmembrarCigarro(cigarro)
+        let containerCigarro = document.querySelector(target)
+        
+        containerCigarro.appendChild()
+    }
     tamanhoDefault = 185
     fumandoCigarro = document.querySelector('.fumandoCigarro')
     // todoCigarroTag = document.querySelector('.cigarroCompleto')
@@ -87,6 +93,7 @@
     }
 
     function desmembrarCigarro(cigarro){
+       
         bituca = cigarro.querySelector('.bituca')
         corpo = cigarro.querySelector('.corpo')
         brasa = cigarro.querySelector('.brasa')
