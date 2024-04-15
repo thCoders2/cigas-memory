@@ -1,0 +1,111 @@
+<style>
+    main{
+        height: 100vh;
+        width: 100vw;
+        background-color: thistle;
+        padding: 5%;
+    }
+    .cigarroCompleto {
+        display: flex;
+        flex-wrap: nowrap;
+        height: 25px;
+    }
+
+    .bituca {
+        background-color: orangered;
+        width: 55px;
+        height: 100%;
+    }
+    .corpo {
+        background-color: antiquewhite;
+        width: 185px;
+        height: 100%;
+    }
+    .brasa {
+        background-color: red;
+        width: 5px;
+        height: 100%;
+    }
+
+    .cinzeiro {
+        margin-top: 200px;
+
+        background-color: lightslategrey;
+        width: 250px;
+        height: 75px;
+    }
+</style>
+
+<link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+<script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+<main>
+    <button id="botao">novo cigarro</button>
+    <br>
+    <div class="fumandoCigarro">
+        <div class="cigarroCompleto">
+            <div class="bituca"></div>
+            <div class="corpo"></div>
+            <div class="brasa"></div>
+        </div>
+
+    </div>
+
+
+    <div class="cinzeiro"></div>
+</main>
+
+<py-env src="index.html"></py-env>
+<py-script>
+import time
+import random
+
+def acenderCigarro():
+    # cria um elemento div com a classe cigarroCompleto
+    cigarro = window.document.createElement("div")
+    cigarro.className = "cigarroCompleto"
+    
+    # cria os elementos div com as classes bituca, corpo e brasa
+    bituca = window.document.createElement("div")
+    bituca.className = "bituca"
+    
+    corpo = window.document.createElement("div")
+    corpo.className = "corpo"
+    
+    brasa = window.document.createElement("div")
+    brasa.className = "brasa"
+    
+    # adiciona os elementos filhos ao elemento pai
+    cigarro.appendChild(bituca)
+    cigarro.appendChild(corpo)
+    cigarro.appendChild(brasa)
+    
+    # adiciona o elemento cigarro ao div fumandoCigarro
+    fumandoCigarro = window.document.querySelector(".fumandoCigarro")
+    fumandoCigarro.appendChild(cigarro)
+    
+    # define uma função para queimar o cigarro
+    def queimar():
+        # reduz a largura do corpo e aumenta a largura da bituca
+        corpo.style.width = str(int(corpo.style.width[:-2]) - 5) + "px"
+        bituca.style.width = str(int(bituca.style.width[:-2]) + 5) + "px"
+        
+        # se o corpo ficar menor que 5px, apaga o cigarro
+        if int(corpo.style.width[:-2]) < 5:
+            # remove o elemento brasa
+            cigarro.removeChild(brasa)
+            
+            # move o cigarro para o cinzeiro
+            cinzeiro = window.document.querySelector(".cinzeiro")
+            cinzeiro.appendChild(cigarro)
+            
+            # cancela o intervalo de queimar
+            window.clearInterval(intervalo)
+    
+    # define um intervalo de 1 segundo para queimar o cigarro
+    intervalo = window.setInterval(queimar, 1000)
+
+# adiciona um evento de click ao botão para acender um novo cigarro
+botao = window.document.getElementById("botao")
+botao.addEventListener("click", acenderCigarro)
+</py-script>
